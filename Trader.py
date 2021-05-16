@@ -1,7 +1,6 @@
 import ccxt
 import numpy as np
 import pandas as pd
-import Series
 import time
 import datetime
 import math
@@ -11,7 +10,7 @@ from sklearn import preprocessing, svm
 from sklearn.svm import SVR
 
 
-class Trader():
+class Trader:
     with open("api.txt") as f:
         lines = f.readlines()
         api_key = lines[0].strip() 
@@ -32,14 +31,14 @@ class Trader():
         return self._df
 
     def get_price(self): #market is a class from ccxt
-        price = BINANCE.fetch_ticker(ticker)
+        price = self.BINANCE.fetch_ticker(self._ticker)
         return price['ask']
 
     def get_target(self):
         yesterday = self._df.iloc[-2]
-        today_open = yesterday['close']
-        yesterday_high = yesterday['high']
-        yesterday_low = yesterday['low']
+        today_open = yesterday['Close']
+        yesterday_high = yesterday['High']
+        yesterday_low = yesterday['Low']
         k = self.get_bestk()
         target = today_open + (yesterday_high - yesterday_low) * k
         return target
@@ -48,26 +47,26 @@ class Trader():
         max_ror = 0
         best_k = 0.5
         for k in np.arange(0.1, 1.0, 0.05):
-            ror = _get_ror(k)
-            if ror > maxi:
-                maxi = ror
+            ror = self._get_ror(k)
+            if ror > max_ror:
+                max_ror = ror
                 best_k = k
         return best_k
 
     def _get_ror(self, k):
-        self._df['range'] = (self._df['high'] - self._df['low']) * k
-        self._df['target'] = self._df['open'] + self._df['range'].shift(1)
+        self._df['Range'] = (self._df['High'] - self._df['Low']) * k
+        self._df['Target'] = self._df['Open'] + self._df['Range'].shift(1)
 
         fee = 0.0032
-        self._df['ror'] = np.where(self._df['high'] > self._df['target'],
-                             self._df['close'] / self._df['target'] - fee,
+        self._df['ror'] = np.where(self._df['High'] > self._df['Target'],
+                             self._df['Close'] / self._df['Target'] - fee,
                              1)
 
         ror = self._df['ror'].cumprod()[-2]
         return ror
 
     def update_ohlcv(self):
-        info = BINANCE.fetch_ticker(self._ticker)
+        info = self.BINANCE.fetch_ticker(self._ticker)
         today = datetime.datetime.utcnow().strftime('%Y-%m-%d')
         new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume']]
         
@@ -76,13 +75,13 @@ class Trader():
             wrtier_object.writerow(new_row)
             fd.close()
         
-        self._df.loc[today] = Series(new_row)
+        self._df.loc[today] = pd.Series(new_row)
         
     def get_sentiment(self): #get prediction price for next day, return predicted price and accuracy.
-        
-        
+        pass
+    
     def get_pressure(self):
-        order_book = BINANCE.fetch_order_book("BTC/USDT")
+        order_book = self.BINANCE.fetch_order_book("BTC/USDT")
         
         up_pressure = 0
         for ask in order_book['asks']:
@@ -98,5 +97,8 @@ class Trader():
         ma5 = sum(i['Close'] for i in self._df.tail()) / 5
         return self._df['Open'].iloc[-1] > ma5
     
+    def get_balance(self):
+        balance = self.BINANCE.fetch_balance()
+        return balance
     
     
