@@ -9,9 +9,8 @@ import numpy as np
 from sklearn import preprocessing, svm
 from sklearn.svm import SVR
 
-
 class Trader:
-    with open("api.txt") as f:
+    with open("log/api.txt") as f:
         lines = f.readlines()
         api_key = lines[0].strip() 
         secret = lines[1].strip() 
@@ -91,8 +90,8 @@ class Trader:
         return (up_pressure / (up_pressure + down_pressure), down_pressure / (up_pressure + down_pressure))
     
     def is_bull(self):
-        ma5 = sum(i['Close'] for i in self._df.tail()) / 5
-        return self._df['Open'].iloc[-1] > ma5
+        self._df['ma5'] = self._df['Close'].rolling(window=5).mean().shift(1)
+        return self._df['Open'].iloc[-1] > self._df['ma5'].iloc[-1]
     
     def get_daily_price_direction(self):
         yesterday = self._df.iloc[-2]
@@ -104,7 +103,7 @@ class Trader:
         op = (yesterday_open - yesterday_low) - (yesterday_high - yesterday_open)
         cl = (yesterday_close - yesterday_low) - (yesterday_high - yesterday_close)
         
-        return (cl - op) / abs(yesterday_close - yesterday_open)
+        return (cl - op) / abs(yesterday_high - yesterday_low)
     
     def get_balance(self):
         balance = self.BINANCE.fetch_balance()
@@ -114,8 +113,6 @@ class Trader:
         #Description: This program gets the sentiment of Bitcoin from Twitter
         import tweepy
         from textblob import TextBlob
-        import pandas as pd
-        import numpy as np
         import re
 
         CONSUMER_KEY= 'thtCNwOql2tuWs6EvSAUUTBXg'
@@ -141,7 +138,6 @@ class Trader:
         #Store the tweets in a variable and get the full text
         all_tweets = [tweet.full_text for tweet in tweets]
 
-        print("creating dataframe")
         #Create a dataframe to store the tweets with a column called 'Tweets'
         df = pd.DataFrame(all_tweets, columns=['Tweets'])
 
@@ -169,8 +165,16 @@ class Trader:
         df['Subjectivity'] = df['CleanTweets'].apply(get_subjectivity) 
         df['Polarity'] = df['CleanTweets'].apply(get_polarity)
 
-        return pd.mean(df['Polarity'])
+        return df['Polarity'].mean()
     
     def get_rating(self):
+        print('current price: {: >20}'.format(self.get_price()))
+        print('current target: {: >20}'.format(self.get_target()))
+        print('current best k: {: >20}'.format(self.get_bestk()))
+        print('current pressure:', self.get_pressure())
+        print('current is_bull: {: >20}'.format(self.is_bull()))
+        print('current daily direction: {: >20}'.format(self.get_daily_price_direction()))
+        print('current sentiment: {: >20}'.format(self.get_sentiment()))
+        
         
     

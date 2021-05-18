@@ -4,8 +4,8 @@ import datetime
 import time
 import ccxt 
 import pprint
-bitcoin = Trader('BTC/USDT', 'BTCUSDT.csv')
-pprint.pprint(bitcoin.get_balance())
+bitcoin = Trader('BTC/USDT', 'log/BTCUSDT.csv')
+bitcoin.get_rating()
 while True:
     try:
         print(bitcoin.get_price())
@@ -27,6 +27,6 @@ while True:
                 print('sold')
         time.sleep(1)
     except Exception as e:
-        with open('error.txt', 'a') as f:
+        with open('log/error.txt', 'a') as f:
             f.write(str(e))
         time.sleep(1)
