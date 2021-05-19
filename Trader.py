@@ -172,7 +172,7 @@ class Trader:
         
         rating = 0.9 if self.is_bull() else 0
         rating += pressure[0] - pressure[1]
-        rating += daily direction
+        rating += self.get_daily_price_direction()
         rating += 0.2 if self.get_sentiment() > 0.4 else 0     
         
         return rating
