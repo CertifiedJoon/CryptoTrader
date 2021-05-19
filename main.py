@@ -3,7 +3,7 @@ import ccxt
 import datetime
 import time
 import ccxt 
-import pausepoi
+import pause
 import pprint
 
 bitcoin = Trader('BTC/USDT', 'log/BTCUSDT.csv')
