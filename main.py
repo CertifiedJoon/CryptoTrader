@@ -22,7 +22,7 @@ while True:
         x = 0.7
         
         if start_time < now < end_time - datetime.timedelta(seconds=10) and current_price < target_price * 1.1: # need some work on buying and selling condition
-            if not bought and target_price < current_price and > x:
+            if not bought and target_price < current_price and rating > x:
                 bought_at = current_price
                 bought = True
 
