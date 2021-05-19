@@ -3,9 +3,13 @@ import ccxt
 import datetime
 import time
 import ccxt 
+import pause
 import pprint
+
 bitcoin = Trader('BTC/USDT', 'log/BTCUSDT.csv')
-bitcoin.get_rating()
+rating = bitcoin.get_rating()
+bought = False
+bought_at = 0
 while True:
     try:
         print(bitcoin.get_price())
@@ -14,18 +18,31 @@ while True:
         start_time -= datetime.timedelta(hours = start_time.hour, minutes = start_time.minute, seconds = start_time.second, microseconds = start_time.microsecond)
         end_time = start_time + datetime.timedelta(days=1)
         target_price = bitcoin.get_target()
-        if start_time < now < end_time - datetime.timedelta(seconds=10):
-            print('target {}'.format(target_price))
-            current_price = bitcoin.get_price()
-            if target_price < current_price:
-                usdt = bitcoin.get_balance()
-                if usdt['free'] > 10:
-                    print('bought')
+        
+        x = 0.7
+        
+        if start_time < now < end_time - datetime.timedelta(seconds=10) and current_price < target_price * 1.1: # need some work on buying and selling condition
+            if not bought and target_price < current_price and > x:
+                bought_at = current_price
+                bought = True
+
         else:
-            btc = get_balance("BTC")
-            if btc > 0.00008:
-                print('sold')
+            bitcoin.update_ohlcv()
+            info = self.BINANCE.fetch_ticker(self._ticker)
+            today = datetime.datetime.utcnow()
+            new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume'], current_price, rating, bitcoin.get_price())
+
+            with open('trades_made.csv','a') as fd:
+                writer_object = writer(fd)
+                wrtier_object.writerow(new_row)
+                fd.close()
+             
+            bought = False
+            rating = bitcoin.get_rating()
+            pause.until(end_time)
+            
         time.sleep(1)
+        
     except Exception as e:
         with open('log/error.txt', 'a') as f:
             f.write(str(e))
