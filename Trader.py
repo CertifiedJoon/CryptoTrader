@@ -5,9 +5,6 @@ import time
 import datetime
 import math
 from datetime import timedelta
-import numpy as np
-from sklearn import preprocessing, svm
-from sklearn.svm import SVR
 
 class Trader:
     with open("log/api.txt") as f:
