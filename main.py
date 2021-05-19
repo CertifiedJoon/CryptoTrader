@@ -3,7 +3,7 @@ import ccxt
 import datetime
 import time
 import ccxt 
-import pause
+import pausepoi
 import pprint
 
 bitcoin = Trader('BTC/USDT', 'log/BTCUSDT.csv')
@@ -30,13 +30,13 @@ while True:
             bitcoin.update_ohlcv()
             info = self.BINANCE.fetch_ticker(self._ticker)
             today = datetime.datetime.utcnow()
-            new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume'], current_price, rating, bitcoin.get_price())
+            new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume'], current_price, rating, bitcoin.get_price()]
 
             with open('trades_made.csv','a') as fd:
                 writer_object = writer(fd)
                 wrtier_object.writerow(new_row)
                 fd.close()
-             
+                
             bought = False
             rating = bitcoin.get_rating()
             pause.until(end_time)

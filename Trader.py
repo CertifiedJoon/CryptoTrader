@@ -168,13 +168,11 @@ class Trader:
         return df['Polarity'].mean()
     
     def get_rating(self):
-        print('current price: {: >20}'.format(self.get_price()))
-        print('current target: {: >20}'.format(self.get_target()))
-        print('current best k: {: >20}'.format(self.get_bestk()))
-        print('current pressure:', self.get_pressure())
-        print('current is_bull: {: >20}'.format(self.is_bull()))
-        print('current daily direction: {: >20}'.format(self.get_daily_price_direction()))
-        print('current sentiment: {: >20}'.format(self.get_sentiment()))
+        pressure = self.get_pressure()
         
+        rating = 0.9 if self.is_bull() else 0
+        rating += pressure[0] - pressure[1]
+        rating += daily direction
+        rating += 0.2 if self.get_sentiment() > 0.4 else 0     
         
-    
+        return rating
