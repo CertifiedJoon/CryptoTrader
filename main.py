@@ -27,7 +27,7 @@ while True:
             if not bought and target_price < current_price and rating > x:
                 bought_at = current_price
                 bought = True
-                post_message(myToken,"#crypto", "BTC buy : " +str(bought_at))
+                Phone.post_message("BTC buy : " +str(bought_at))
 
         else:
             bitcoin.update_ohlcv()
