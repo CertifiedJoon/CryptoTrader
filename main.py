@@ -6,6 +6,7 @@ import ccxt
 import pause
 import pprint
 import csv
+import Phone
 
 bitcoin = Trader('BTC/USDT', 'log/BTCUSDT.csv')
 rating = bitcoin.get_rating()
@@ -26,6 +27,7 @@ while True:
             if not bought and target_price < current_price and rating > x:
                 bought_at = current_price
                 bought = True
+                post_message(myToken,"#crypto", "BTC buy : " +str(bought_at))
 
         else:
             bitcoin.update_ohlcv()
@@ -37,7 +39,7 @@ while True:
                 writer_object = csv.writer(fd)
                 writer_object.writerow(new_row)
                 fd.close()
-                
+            Phone.post_message("BTC sell : " +str(new_row[-1]))
             bought = False
             rating = bitcoin.get_rating()
             pause.until(end_time)
