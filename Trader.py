@@ -4,6 +4,7 @@ import pandas as pd
 import time
 import datetime
 import math
+import csv
 from datetime import timedelta
 
 class Trader:
@@ -67,8 +68,8 @@ class Trader:
         new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume']]
         
         with open(self._filename,'a') as fd:
-            writer_object = writer(fd)
-            wrtier_object.writerow(new_row)
+            writer_object = csv.writer(fd)
+            writer_object.writerow(new_row)
             fd.close()
         
         self._df.loc[today] = pd.Series(new_row)
@@ -140,23 +141,23 @@ class Trader:
 
         #Create a function to clean the tweets
         def cleanTwt(twt):
-          twt = re.sub('#bitcoin', 'bitcoin', twt) #removes the hashtag from #bitcoin
-          twt = re.sub('#Bitcoin', 'Bitcoin', twt) #removes the hashtag from #Bitcoin
-          twt = re.sub('#[A-Za-z0-9]+', '', twt) #removes anything with hashtag
-          twt = re.sub('@[A-Za-z0-9]+', '', twt)
-          twt = re.sub('\\n','',twt) #removes newlines
-          twt = re.sub('https?:\/\/\S+', '', twt) #removes any hyperlinks
-          return twt
+            twt = re.sub('#bitcoin', 'bitcoin', twt) #removes the hashtag from #bitcoin
+            twt = re.sub('#Bitcoin', 'Bitcoin', twt) #removes the hashtag from #Bitcoin
+            twt = re.sub('#[A-Za-z0-9]+', '', twt) #removes anything with hashtag
+            twt = re.sub('@[A-Za-z0-9]+', '', twt)
+            twt = re.sub('\\n','',twt) #removes newlines
+            twt = re.sub('https?:\/\/\S+', '', twt) #removes any hyperlinks
+            return twt
 
         #Clean tweets gathered
         df['CleanTweets'] = df['Tweets'].apply(cleanTwt)
         #Create a function to get the subjectivity
         def get_subjectivity(twt):
-          return TextBlob(twt).sentiment.subjectivity
+            return TextBlob(twt).sentiment.subjectivity
 
         #Create a function to get the polarity
         def get_polarity(twt):
-          return TextBlob(twt).sentiment.polarity
+            return TextBlob(twt).sentiment.polarity
 
         #Create two new columns called 'subjectivity' and 'polarity'
         df['Subjectivity'] = df['CleanTweets'].apply(get_subjectivity) 
