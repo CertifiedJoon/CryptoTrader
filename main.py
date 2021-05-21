@@ -2,9 +2,7 @@ from Trader import Trader
 import ccxt
 import datetime
 import time
-import ccxt 
 import pause
-import pprint
 import csv
 import Phone
 
@@ -27,10 +25,9 @@ while True:
             if not bought and target_price < current_price and rating > x:
                 bought_at = current_price
                 bought = True
-                Phone.post_message("BTC buy : " +str(bought_at))
+                Phone.post_message("BTC buy : " + str(bought_at))
 
-        else:
-            bitcoin.update_ohlcv()
+        elif start_time < now < end_time - datetime.timedelta(seconds=10) and current_price > target_price * 1.1:
             info = bitcoin.BINANCE.fetch_ticker(bitcoin._ticker)
             today = datetime.datetime.utcnow()
             new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume'], current_price, rating, bitcoin.get_price()]
@@ -42,8 +39,9 @@ while True:
             Phone.post_message("BTC sell : " +str(new_row[-1]))
             bought = False
             rating = bitcoin.get_rating()
-            pause.until(end_time)
-            
+            pause.until(end_time - datetime.timedelta(seconds=10))
+        else:
+            bitcoin.update_ohlcv()
         time.sleep(1)
         
     except Exception as e:
