@@ -10,6 +10,7 @@ bitcoin = Trader('BTC/USDT', 'log/BTCUSDT.csv')
 rating = bitcoin.get_rating()
 bought = False
 bought_at = 0
+
 while True:
     try:
         current_price = bitcoin.get_price()
@@ -27,7 +28,7 @@ while True:
                 bought = True
                 Phone.post_message("BTC buy : " + str(bought_at))
 
-        elif start_time < now < end_time - datetime.timedelta(seconds=10) and current_price > target_price * 1.1:
+        elif start_time < now < end_time - datetime.timedelta(seconds=10) and bought and > target_price * 1.1:
             info = bitcoin.BINANCE.fetch_ticker(bitcoin._ticker)
             new_row = [now, info['open'], info['high'], info['low'], info['close'], info['quoteVolume'], current_price, rating, bitcoin.get_price()]
 
