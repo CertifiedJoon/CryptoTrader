@@ -28,7 +28,7 @@ while True:
                 bought = True
                 Phone.post_message("BTC buy : " + str(bought_at))
 
-        elif start_time < now < end_time - datetime.timedelta(seconds=10) and bought and > target_price * 1.1:
+        elif start_time < now < end_time - datetime.timedelta(seconds=10) and bought and current_price > target_price * 1.1:
             info = bitcoin.BINANCE.fetch_ticker(bitcoin._ticker)
             new_row = [now, bought_at, rating, bitcoin.get_price()]
 
