@@ -39,10 +39,21 @@ while True:
                 
             Phone.post_message("BTC sell : " +str(new_row[-1]))
             bought = False
-            rating = bitcoin.get_rating()
             pause.until(end_time - datetime.timedelta(seconds=10))
-        else:
+        elif end_time - datetime.timdelta(seconds=10) < now < end_time:
+            if bought:
+                info = bitcoin.BINANCE.fetch_ticker(bitcoin._ticker)
+                new_row = [now, bought_at, rating, bitcoin.get_price()]
+
+                with open('trades_made.csv','a') as fd:
+                    writer_object = csv.writer(fd)
+                    writer_object.writerow(new_row)
+                    fd.close()
+
+                Phone.post_message("BTC sell : " +str(new_row[-1]))
+                bought = False
             bitcoin.update_ohlcv()
+            rating = bitcoin.get_rating()
         time.sleep(1)
         
     except Exception as e:
