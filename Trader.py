@@ -65,7 +65,7 @@ class Trader:
     def update_ohlcv(self):
         info = self.BINANCE.fetch_ticker(self._ticker)
         today = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-        new_row = [today, info['open'], info['high'], info['low'], info['close'], info['volume']]
+        new_row = [today, info['open'], info['high'], info['low'], info['close'], info['quoteVolume']]
         
         with open(self._filename,'a') as fd:
             writer_object = csv.writer(fd)

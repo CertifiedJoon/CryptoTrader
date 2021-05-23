@@ -30,7 +30,7 @@ while True:
 
         elif start_time < now < end_time - datetime.timedelta(seconds=10) and bought and > target_price * 1.1:
             info = bitcoin.BINANCE.fetch_ticker(bitcoin._ticker)
-            new_row = [now, info['open'], info['high'], info['low'], info['close'], info['quoteVolume'], current_price, rating, bitcoin.get_price()]
+            new_row = [now, bought_at, rating, bitcoin.get_price()]
 
             with open('trades_made.csv','a') as fd:
                 writer_object = csv.writer(fd)
