@@ -132,7 +132,7 @@ class Trader:
         search_term = '#bitcoin -filter:retweets'
 
         #Create a cursor object
-        tweets = tweepy.Cursor(api.search, q=search_term, lang='en', since='2021-05-10', tweet_mode='extended').items(2000)
+        tweets = tweepy.Cursor(api.search, q=search_term, lang='en', since='2021-05-10', tweet_mode='extended').items(500)
         #Store the tweets in a variable and get the full text
         all_tweets = [tweet.full_text for tweet in tweets]
 
@@ -174,3 +174,17 @@ class Trader:
         rating += 0.2 if self.get_sentiment() > 0.4 else 0     
         
         return rating
+    
+    def store_trade(self, now, bought_at, rating):
+        info = self.BINANCE.fetch_ticker(self._ticker)
+        new_row = [now, bought_at, rating, self.get_price()]
+
+        with open('trades_made.csv','a') as fd:
+            writer_object = csv.writer(fd)
+            writer_object.writerow(new_row)
+            fd.close()
+            
+            
+            
+            
+            
