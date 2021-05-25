@@ -30,20 +30,21 @@ while True:
 
         elif start_time < now < end_time - datetime.timedelta(seconds=10) and bought and current_price > target_price * 1.1:
             bitcoin.store_trade(now, bought_at, rating)
-            Phone.post_message("BTC sell : " + str(new_row[-1]))
+            Phone.post_message("BTC sell : " + str(current_price)
             bought = False
             pause.until(end_time - datetime.timedelta(seconds=10))
             
         elif end_time - datetime.timedelta(seconds=10) < now < end_time:
             if bought:
                 bitcoin.store_trade(now, bought_at, rating)
-                Phone.post_message("BTC sell : " + str(new_row[-1]))
+                Phone.post_message("BTC sell : " + str(current_price))
                 bought = False
                 
             bitcoin.update_ohlcv()
             rating = bitcoin.get_rating()
             target_price = bitcoin.get_target()
-
+            time.sleep(10)
+            
         time.sleep(1)
         
     except Exception as e:
