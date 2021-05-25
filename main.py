@@ -30,7 +30,7 @@ while True:
 
         elif start_time < now < end_time - datetime.timedelta(seconds=10) and bought and current_price > target_price * 1.1:
             bitcoin.store_trade(now, bought_at, rating)
-            Phone.post_message("BTC sell : " + str(current_price)
+            Phone.post_message("BTC sell : " + str(current_price))
             bought = False
             pause.until(end_time - datetime.timedelta(seconds=10))
             
