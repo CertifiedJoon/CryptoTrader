@@ -112,12 +112,13 @@ class Trader:
         import tweepy
         from textblob import TextBlob
         import re
-
-        CONSUMER_KEY= 'thtCNwOql2tuWs6EvSAUUTBXg'
-        CONSUMER_KEY_SECRET = 'WNxdctkNdkpIyVQQGTY82CZBRZZNaBoviZwO9n5fEEP6GiUdG6'
-
-        ACCESS_TOKEN = '1394225479775756289-cFGjGk0sE7DxtjWrsmKujlApPmzjqM'
-        ACCESS_TOKEN_SECRET = 'Q3U2AK2b5vVsthJX2edm2ugQJrPa5wERS9L7n3G6Cy6zo'
+        
+        with open("credential/api.txt") as f:
+            lines = f.readlines()
+            CONSUMER_KEY= lines[0].strip()
+            CONSUMER_KEY_SECRET = lines[1].strip()
+            ACCESS_TOKEN = lines[2].strip()
+            ACCESS_TOKEN_SECRET = lines[3].strip()
 
         #create authentication object
         authenticate = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
