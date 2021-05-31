@@ -8,7 +8,7 @@ import csv
 from datetime import timedelta
 
 class Trader:
-    with open("log/api.txt") as f:
+    with open("credential/api.txt") as f:
         lines = f.readlines()
         api_key = lines[0].strip() 
         secret = lines[1].strip() 
