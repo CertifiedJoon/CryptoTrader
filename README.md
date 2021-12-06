@@ -1,3 +1,3 @@
 # CryptoTrader
-Automatic cryptocurrency trader empowered by AI
-![Alt text](img/uml.jpg?raw=true "UML DIAGRAM")
+Flexible and Scalable Automatic CryptoCurrency Trader
+![Alt text](img/uml.png?raw=true "UML DIAGRAM")
