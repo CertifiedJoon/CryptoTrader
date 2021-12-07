@@ -180,7 +180,7 @@ class Trader:
         info = self.BINANCE.fetch_ticker(self._ticker)
         new_row = [now, bought_at, rating, self.get_price()]
 
-        with open('trades_made.csv','a') as fd:
+        with open('log/trades_made.csv','a') as fd:
             writer_object = csv.writer(fd)
             writer_object.writerow(new_row)
             fd.close()
