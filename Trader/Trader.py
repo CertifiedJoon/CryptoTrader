@@ -1,3 +1,7 @@
+# I used to have use Binance's API to trade crypto. But i am thinking of shifting to Stock Market API
+# So i have commented out the binance code.
+# This class takes care of fetching information needed in trading
+
 import datetime
 import Strategy as strg
 import ccxt

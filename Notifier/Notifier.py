@@ -1,5 +1,12 @@
 from collections import defaultdict
 import requests
+
+# Notifier Purpose:
+#   When the algorithm makes a transaction, we must notify us by some way.
+#   Feel free to add/remove feature.
+#   Right now i am using slack to send notification to my phone.
+#   Replace NotImplementedError to add your own code.
+
 class Notifier:
     def __init__(self):
         self._contacts = defaultdict(list)

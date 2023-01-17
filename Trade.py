@@ -1,3 +1,7 @@
+# I have commented out my implementation for trading.
+# This class takes care of all the operation during trading.
+# Replace NotImplementedError to add your own code.
+
 import sys
 import time
 import datetime
