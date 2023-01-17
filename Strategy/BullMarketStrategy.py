@@ -1,6 +1,7 @@
 import Strategy as strg
 
 class BullMarketStrategy(strg.Strategy):
+    """Buy if moving average over 5 days interval."""
     def __init__(self, df):
         self._df = df
         

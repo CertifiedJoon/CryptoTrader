@@ -1,6 +1,9 @@
 import Strategy as strg
 
 class PricePressureStrategy(strg.Strategy):
+    """
+    Buy if price pressure is upwards by some level
+    """
     def __init__(self, stoploss, takeprofit, ticker, df, binance):
         super.__init__(stoploss, takeprofit)
         self._df = df

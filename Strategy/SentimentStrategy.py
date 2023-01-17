@@ -1,6 +1,10 @@
 import Strategy as strg
 
 class SentimentStrategy(strg.Strategy):
+    """
+    Collect tweets regarding the stock and find the twitter's sentiment on the stock
+    buy if positive, sell if negative
+    """
     TICKER_KEYWORD_MAPPING = {'BTC/USDT': 'Bitcoin', 'ETH/USDT': 'Ethereum', 'BNB/USDT': 'Binance', 'ADA/USDT':'ADA', 'XRP/USDT': 'Ripple', 'DOGE/USDT': 'Doge'}
     def __init__(self, ticker):
         # Add midnight Optimization

@@ -14,7 +14,6 @@ from tweepy import API
 from tweepy import Cursor
 
 class TwitterClient():
-    
     def __init__(self):
         self.auth = TwitterAuthenticator().authenticate_twitter_app()
         self.twitter_client = API(self.auth)

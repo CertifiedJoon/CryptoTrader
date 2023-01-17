@@ -1,6 +1,10 @@
 import Strategy as strg
 
 class CompositeRatingStrategy(strg.Strategy):
+    """
+    Create a composition of strategies and calculate a buy rating.
+    if the rating is above certain threshold, buy. sell if it goes below.
+    """
     MINIMUM_RATING = 0.75
     def __init__(self):
         # Add midnight caching of rating!

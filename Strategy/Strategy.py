@@ -1,4 +1,7 @@
 class Strategy:
+    """
+    Parent class for all strategies
+    """
     __slots__ = '_stop_loss', '_max_profit'
     def __init__(self, stop_loss, take_profit):
         """

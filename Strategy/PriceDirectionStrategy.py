@@ -1,6 +1,9 @@
 import Strategy as strg
 
 class PriceDirection(strg.Strategy):
+    """
+    Evaluate the price Direction is positive by a certain margin
+    """
     def __init(self, stoploss, take_profit, df):
         super.__init__(stoploss, take_profit)
         self._df = df 

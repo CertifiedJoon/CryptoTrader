@@ -1,6 +1,9 @@
 import Strategy as strg
 
 class VolatilityBreakoutStrategy(strg.Strategy):
+    """
+    VBS. Check Wikipedia for details of strategy
+    """
     def __init__(self, stoploss, takeprofit, df):
         super.__init__(stoploss, takeprofit)
         self._buy_price = -1  # midnight caching
