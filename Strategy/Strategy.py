@@ -16,7 +16,7 @@ class Strategy:
         """Grand approval to sell at certain conditions"""
         None
     
-    def _take_progit_price(self, bought_at):
+    def _take_profit_price(self, bought_at):
         """Given price bought, return target price"""
         return bought_at * self._take_profit
     

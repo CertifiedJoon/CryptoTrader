@@ -23,7 +23,7 @@ class PriceDirection(strg.Strategy):
 
     def approve_sell(self, bought_at, price = None, time = None):
         """Approve sell if it is midnight"""
-        if isistance(price, datetime.datetime()):
+        if isinstance(price, datetime.datetime()):
             time = price
         
         start = time - datetime.timedelta(hours = time.hours,

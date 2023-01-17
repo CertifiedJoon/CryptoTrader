@@ -8,7 +8,8 @@ class PricePressureStrategy(strg.Strategy):
         self.BINANCE = binance
 
     def get_pressure(self):
-        order_book = self.BINANCE.fetch_order_book("BTC/USDT")
+        """Fetch Orders from external API and interpret it"""
+        order_book = {}
         
         up_pressure = 0
         for ask in order_book['asks']:

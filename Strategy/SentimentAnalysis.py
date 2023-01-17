@@ -60,7 +60,7 @@ class TwitterListener(StreamListener):
             with open(self.fetched_tweets_filename, 'a') as f:
                 f.write(data)
             return True
-        except Exceptioin as e:
+        except Exception as e:
             print("Error on_data: {}".format(str(e)))
         return True
     
@@ -68,9 +68,10 @@ class TwitterListener(StreamListener):
         if status == 420:
             # returning false to terminate on_data method in case rate limit is encountered.
             return False
-        pritn(status)
+        print(status)
     
 if __name__ == '__main__':
+    """Hash Tag to be set dynamically"""
     hash_tags = ['Bitcoin', 'bitcoin', 'crypto', 'Crypto']
     tweets_file = 'tweets.json'
     twitter_client = TwitterClient()

@@ -1,6 +1,7 @@
+from collections import defaultdict
 import requests
 class Notifier:
-    def __init__self():
+    def __init__(self):
         self._contacts = defaultdict(list)
     
     def add_contacts(self, contact_type, contact):

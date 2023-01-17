@@ -4,7 +4,7 @@ class BullMarketStrategy(strg.Strategy):
     def __init__(self, df):
         self._df = df
         
-    def is_bullish()(self):
+    def is_bullish(self):
         self._df['ma5'] = self._df['Close'].rolling(window=5).mean().shift(1)
         return self._df['Open'].iloc[-1] > self._df['ma5'].iloc[-1]
 

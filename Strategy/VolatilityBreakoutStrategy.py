@@ -50,7 +50,7 @@ class VolatilityBreakoutStrategy(strg.Strategy):
         if start + datetime.timedelta(days = 1) < time < start + datetime.timedelta(days=1, seconds = 10):
             self._buy_price = -1
         
-        if self._buy_price = -1:
+        if self._buy_price == -1:
             self._buy_price = self.get_buy_price()
         
         return price > self._buy_price
